@@ -1,5 +1,11 @@
-import streamlit as st
+import nltk
 from nltk.tokenize import word_tokenize
+import streamlit as st
+nltk.data.path.append("C:\\Users\\khrib\\OneDrive\\Bureau\\clinicog_bot\\env\\lib\\nltk_data")  # Update this path
+# Download the required NLTK data packages
+nltk_data_packages = ["punkt", "averaged_perceptron_tagger", "stopwords"]
+for package in nltk_data_packages:
+    nltk.download(package)
 
 # Function to load and apply CSS
 def local_css(file_name):
