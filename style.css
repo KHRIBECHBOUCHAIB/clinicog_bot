@@ -1,0 +1,37 @@
+
+
+.stButton>button {
+    border-radius: 20px;
+    border: 2px solid #4CAF50;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.stButton>button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+
+/* New Styling for Text Input Label */
+.stTextInput>label {
+    font-weight: bold;
+}
+
+/* Adjust the width of the input field to make it more responsive */
+.stTextInput>div>div>input {
+    width: calc(100% - 20px); /* Adjust based on padding */
+}
+/* Adjusting Streamlit Title Size */
+.stTitle>h1, h1 {
+    font-size: 24px; /* Decrease this value to make the title smaller */
+    font-weight: bold;
+    color: #333; /* Adjust the color if needed */
+}
