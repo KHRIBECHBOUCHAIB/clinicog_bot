@@ -1,19 +1,52 @@
 import nltk
 from nltk.tokenize import word_tokenize
 import streamlit as st
+import hmac
+import hashlib
+
+
+
 nltk.data.path.append("C:\\Users\\khrib\\OneDrive\\Bureau\\clinicog_bot\\env\\lib\\nltk_data")  # Update this path
 # Download the required NLTK data packages
 nltk_data_packages = ["punkt", "averaged_perceptron_tagger", "stopwords"]
 for package in nltk_data_packages:
     nltk.download(package)
 
+def check_password():
+    """Prompt the user for a password and check if it's correct."""
+    if 'password_correct' not in st.session_state or not st.session_state['password_correct']:
+        with st.form(key='Password_form'):
+            password_input = st.text_input("Enter your password:", type="password", placeholder="Type your password here")
+            submit_button = st.form_submit_button("Submit")
+
+            if submit_button and password_input:
+                # Hash the input using the secret key from secrets.toml
+                hashed_input = hmac.new(
+                    key=st.secrets["secret_key"].encode(),
+                    msg=password_input.encode(),
+                    digestmod=hashlib.sha256
+                ).hexdigest()
+
+                # Compare the hash of the input password with the stored hash
+                if hmac.compare_digest(hashed_input, st.secrets["password_hash"]):
+                    st.session_state["password_correct"] = True
+                else:
+                    st.session_state["password_correct"] = False
+                    st.error("Password incorrect. Please try again.")
+
+    return st.session_state.get("password_correct", False)
+
+if not check_password():
+    st.stop()  # Stop execution of the app if the password is incorrect
+else:
+
 # Function to load and apply CSS
-def local_css(file_name):
+ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Apply the CSS
-local_css("style.css")  # or "styles/style.css" if you put it in a styles directory
+ local_css("style.css")  # or "styles/style.css" if you put it in a styles directory
 
 # Load your logo image
 logo = "images/logo.jpg"
